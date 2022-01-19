@@ -1,21 +1,24 @@
 from django.db import models
-from datetime import datetime
-from account.models import CreationDateAbstract
 
 
-class Category(CreationDateAbstract):
+class CreationDateAbstract(models.Model):
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_update = models.DateTimeField(auto_now_add=True)
+
+
+class Category(models.Model):
     """ Category model """
     name = models.CharField(max_length=255, blank=True, null=True)
     description = models.CharField(max_length=500, blank=True, null=True, verbose_name='Описание')
 
 
-class SubCategory(CreationDateAbstract):
+class SubCategory(models.Model):
     """ SubCategory model """
     name = models.CharField(max_length=255, blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='sub_category')
 
 
-class Advertisement(CreationDateAbstract):
+class Advertisement(models.Model):
     """ Advertisement model """
 
     TYPE_ADVERTISEMENT = (
