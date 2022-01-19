@@ -1,0 +1,43 @@
+version: "3.5"
+
+services:
+  back:
+    build: .
+    container_name: sr_back
+    ports:
+      - "8005:8005"
+    restart: always
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8005"
+    tty: true
+    volumes:
+      - .:/sr_service
+    networks:
+      back_network:
+    depends_on:
+      - db
+    env_file:
+      - .secret.env
+
+  db:
+    image: postgres
+    container_name: sr_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_data:/var/lib/postgres/data
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=special_rent
+    networks:
+      back_network:
+
+
+volumes:
+  pg_data:
+
+networks:
+  back_network:
+
+

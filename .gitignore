@@ -1,0 +1,13 @@
+venv
+*.sqlite3
+.secret.env
+.idea
+/tables_dump_*.sql
+# pic files
+*.pot
+*.pyc
+*__pycache__/
+*/*/*/__pycahe__/
+*/*/__pycache__/
+*/__pycache__/
+
