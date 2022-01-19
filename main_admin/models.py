@@ -39,7 +39,6 @@ class Organization(models.Model):
     address = models.TextField(blank=True, null=True)
     time_graf = models.TextField(blank=True, null=True, verbose_name='График работы')
     socials = models.JSONField(blank=True, null=True, verbose_name='Social')
-    org_type = models.CharField(max_length=15, choices=TYPE_ORGANISATION, default='rent')
 
 
 class Favorite(CreationDateAbstract):
