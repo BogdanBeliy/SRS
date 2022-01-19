@@ -21,12 +21,15 @@ class SubCategory(models.Model):
 class Advertisement(models.Model):
     """ Advertisement model """
 
-    TYPE_ADVERTISEMENT = (
+    PAYMENT_TYPE = (
         ('free', 'free'),
-        ('paid', 'paid'),
+        ('day', 'day'),
+        ('week', 'week'),
+        ('month', 'month'),
+
     )
     name = models.CharField(max_length=255, blank=True, null=True)
-    type_advertisement = models.CharField(max_length=5, choices=TYPE_ADVERTISEMENT, default='free')
+    payment_type = models.CharField(max_length=5, choices=PAYMENT_TYPE, default='free')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='advertisement')
     photo = models.ImageField(blank=True, null=True)
     description = models.CharField(max_length=500, blank=True, null=True, verbose_name='Описание объявления')
