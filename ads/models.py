@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import datetime
-from core.abstractions.model_abstract import CreationDateAbstract
+from account.models import CreationDateAbstract
 
 
 class Category(CreationDateAbstract):
