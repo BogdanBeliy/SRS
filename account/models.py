@@ -1,9 +1,12 @@
 from django.db import models
-from core.abstractions.model_abstract import CreationDateAbstract
+
+
+class CreationDateAbstract(models.Model):
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_update = models.DateTimeField(auto_now_add=True)
 
 
 class CustomUser(CreationDateAbstract):
-
     """ User info model """
 
     email = models.EmailField()
@@ -13,7 +16,6 @@ class CustomUser(CreationDateAbstract):
 
 
 class Organistaion(models.Model):
-
     """ organisation model """
 
     TYPE_ORGANISATION = (
@@ -31,9 +33,7 @@ class Organistaion(models.Model):
     socials = models.JSONField(blank=True, null=True)
 
 
-
 class Favorite(CreationDateAbstract):
-
     """ favorite ad or organisation by user """
 
     FAVORITE_CHOICE = (
@@ -45,11 +45,3 @@ class Favorite(CreationDateAbstract):
     name = models.CharField(max_length=255)
     org = models.PositiveIntegerField(default=0)
     url = models.URLField()
-
-
-
-
-
-
-
-
