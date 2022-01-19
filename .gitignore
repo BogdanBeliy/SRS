@@ -10,4 +10,5 @@ venv
 */*/*/__pycahe__/
 */*/__pycache__/
 */__pycache__/
-
+/media
+/static
