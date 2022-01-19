@@ -31,6 +31,7 @@ class Organization(models.Model):
         ('rent', 'rent'),
         ('repair', 'repair'),
     )
+    name = models.CharField(max_length=255, blank=True, null=True)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='organisation')
     unp = models.CharField(max_length=50, blank=True, null=True)
     phone = models.CharField(max_length=50, blank=True, null=True)
