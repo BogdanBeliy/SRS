@@ -1,5 +1,5 @@
 from django.db import models
-
+from account.models import Organization
 
 class CreationDateAbstract(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
@@ -28,6 +28,7 @@ class Advertisement(models.Model):
         ('month', 'month'),
 
     )
+    creator = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='ad_by_org')
     name = models.CharField(max_length=255, blank=True, null=True)
     payment_type = models.CharField(max_length=5, choices=PAYMENT_TYPE, default='free')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='advertisement')
