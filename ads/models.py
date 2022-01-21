@@ -1,6 +1,7 @@
 from django.db import models
 from account.models import Organization
 
+
 class CreationDateAbstract(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now_add=True)
@@ -31,7 +32,7 @@ class Advertisement(models.Model):
     creator = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='ad_by_org')
     name = models.CharField(max_length=255, blank=True, null=True)
     payment_type = models.CharField(max_length=5, choices=PAYMENT_TYPE, default='free')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='advertisement')
+    category = models.ForeignKey(SubCategory, on_delete=models.CASCADE, related_name='advertisement')
     photo = models.ImageField(blank=True, null=True)
     description = models.CharField(max_length=500, blank=True, null=True, verbose_name='Описание объявления')
     cost = models.DecimalField(blank=True, null=True, max_digits=10, decimal_places=2)
