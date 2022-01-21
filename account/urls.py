@@ -1,6 +1,7 @@
 from django.urls import path
-from account.views import AllUserView
+from account.views import UserView
 
 urlpatterns = [
-    path('all-users/', AllUserView.as_view(), name='all_users'),
+    path('user/<int:user_id>/', UserView.as_view(), name='user_profile'),
+    # path('user-settings/<int:user_id>/', UserSettingsView.as_view(), name='user_settings'),
 ]

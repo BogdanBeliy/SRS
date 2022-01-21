@@ -9,8 +9,15 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
-        ret['organisation_name'] = OrganisationSerializer(instance.organisation.name).data
+        if instance.organisation:
+            ret['organisation_name'] = OrganisationSerializer(instance.organisation).data
+            ret['ad_count'] = int(instance.organisation.ad_by_org.all().count())
+            ret['favorites_count'] = int(instance.favorites.all().count())
+        else:
+            ret['organisation_name'] = {}
         return ret
+
+
 
 
 class OrganisationSerializer(serializers.ModelSerializer):
