@@ -9,11 +9,22 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = '__all__'
 
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret['sub_categories'] = SubCategorySerializer(instance.sub_category.all(), many=True).data
+        return ret
+
 
 class SubCategorySerializer(serializers.ModelSerializer):
+
     class Meta:
         model = SubCategory
-        fields = '__all__'
+        fields = ['name', ]
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret['count_ads'] = instance.advertisement.all().count()
+        return ret
 
 
 class AdvertisementSerializer(serializers.ModelSerializer):
