@@ -1,7 +1,9 @@
 from django.urls import path
-from account.views import UserView
+from account.views import CustomUserViewSet
+from rest_framework import routers
 
 urlpatterns = [
-    path('user/<int:user_id>/', UserView.as_view(), name='user_profile'),
-    # path('user-settings/<int:user_id>/', UserSettingsView.as_view(), name='user_settings'),
+    path('<str:pk>/', CustomUserViewSet.as_view({'get': 'retrieve'}))
+
 ]
+

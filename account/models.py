@@ -1,5 +1,5 @@
 from django.db import models
-
+from uuid import uuid4
 
 
 class CreationDateAbstract(models.Model):
@@ -7,13 +7,14 @@ class CreationDateAbstract(models.Model):
     date_update = models.DateTimeField(auto_now_add=True)
 
 
-class CustomUser(CreationDateAbstract):
+class CustomUser(models.Model):
     """ User info model """
     PYMENT_STATUS = (
         ('free', 'free'),
         ('month', 'month'),
         ('year', 'year'),
     )
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     email = models.EmailField()
     name = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=True, null=True)
@@ -31,8 +32,9 @@ class Organization(models.Model):
         ('rent', 'rent'),
         ('repair', 'repair'),
     )
+
     name = models.CharField(max_length=255, blank=True, null=True)
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='organisation')
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='organisation', blank=True, null=True)
     unp = models.CharField(max_length=50, blank=True, null=True)
     phone = models.CharField(max_length=50, blank=True, null=True)
     org_email = models.EmailField(blank=True, null=True)
@@ -51,7 +53,7 @@ class Favorite(CreationDateAbstract):
         ('org', 'org'),
     )
     favorite_type = models.CharField(max_length=5, choices=FAVORITE_CHOICE, default='ad')
-    user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='favorites')
+    user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='favorites', blank=True, null=True)
     name = models.CharField(max_length=255)
     org = models.PositiveIntegerField(default=0)
     url = models.URLField()
