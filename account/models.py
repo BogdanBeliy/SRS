@@ -14,14 +14,17 @@ class CustomUser(models.Model):
         ('month', 'month'),
         ('year', 'year'),
     )
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    email = models.EmailField()
-    name = models.CharField(max_length=255, blank=True, null=True)
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False, unique=True)
+    email = models.EmailField(blank=True, null=True)
+    name = models.CharField(max_length=255, blank=True, null=True, default='your name')
     last_name = models.CharField(max_length=255, blank=True, null=True)
     """ fields for control user """
-    payment_status = models.CharField(max_length=10, default='free')
-    pays = models.DecimalField(default=20, decimal_places=2, max_digits=10)
+    payment_status = models.CharField(max_length=10, default='free', blank=True, null=True)
+    pays = models.DecimalField(default=20, decimal_places=2, max_digits=10, blank=True, null=True)
     status = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Organization(models.Model):
@@ -42,7 +45,7 @@ class Organization(models.Model):
     address = models.TextField(blank=True, null=True)
     time_graf = models.TextField(blank=True, null=True, verbose_name='График работы')
     socials = models.JSONField(blank=True, null=True, verbose_name='Social')
-    org_type = models.CharField(max_length=15, choices=TYPE_ORGANISATION, default='rent')
+    org_type = models.CharField(max_length=15, choices=TYPE_ORGANISATION, default='rent', blank=True, null=True)
 
 
 class Favorite(CreationDateAbstract):
@@ -54,6 +57,6 @@ class Favorite(CreationDateAbstract):
     )
     favorite_type = models.CharField(max_length=5, choices=FAVORITE_CHOICE, default='ad')
     user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='favorites', blank=True, null=True)
-    name = models.CharField(max_length=255)
-    org = models.PositiveIntegerField(default=0)
-    url = models.URLField()
+    name = models.CharField(max_length=255, blank=True, null=True)
+    org = models.CharField(max_length=255, blank=True, null=True)
+    url = models.URLField(blank=True, null=True)

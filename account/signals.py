@@ -5,6 +5,6 @@ from account.models import CustomUser, Organization
 
 @receiver(post_save, sender=CustomUser)
 def create_organisation(sender: CustomUser, instance: object, created: bool, **kwargs: dict):
-    organisation_create = Organization.objects.create(user=instance)
+    organisation_create = Organization.objects.get_or_create(user_id=instance.id)
 
 
